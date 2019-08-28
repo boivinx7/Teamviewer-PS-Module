@@ -4,5 +4,6 @@
   <OpenFolders />
   <OpenFiles>
     <File>TeamViewerPSModules.psm1</File>
+    <File>Test-Module.ps1</File>
   </OpenFiles>
 </ProjectState>

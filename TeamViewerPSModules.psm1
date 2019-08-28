@@ -1450,7 +1450,7 @@ function Remove-TVDuplicateDevices
 		}
 	}
 }
-#>s
+#>
 
 function Add-TVDevice
 {

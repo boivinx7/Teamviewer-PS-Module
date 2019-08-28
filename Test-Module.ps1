@@ -34,8 +34,88 @@ Import-Module 'TeamViewerPSModules'
 #	}	
 #}
 $global:TVToken = ""
-#Create-TVUser -UserEmail "maxime.bilodeau-boivin@agropur.com" -defaultUserPermissions EditFullProfile -defaultUserPassword "Agropur01" -DefaultUserLanguage en -UserFullName "Maxime BB"
 #Get-TVUsers | Where-Object {$_.name -like "*bassem*"}
+function Remove-TVDuplicateDevices
+{
+	[CmdletBinding(ConfirmImpact = 'Medium',
+				   PositionalBinding = $false,
+				   SupportsPaging = $true,
+				   SupportsShouldProcess = $true)]
+	param
+	(
+		$Token
+	)
+	
+	if ($global:TVToken)
+	{
+		$token = $global:TVToken
+	}
+	elseif ($token)
+	{
+		$token = $token
+	}
+	else
+	{
+		Write-Output "You need to Set the Token"
+		break
+	}
+	
+	$Devices = Get-TVDevices
+	$Devices | Out-File "$env:APPDATA\TeamViewerAllDevices.txt"
+	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+	$header.Add("authorization", "Bearer  $Token")
+	$Array = @()
+	
+	[int]$Count = ($Devices).count
+	$Start = 0
+	
+	foreach ($Device in $Devices)
+	{
+		$DeviceAlias = $Device.Alias
+		$CheckDuplicates = $Devices | Where-Object { $_.alias -like "*$DeviceAlias*" }
+		$percent = [math]::Round((($Start / $Count) * 100))
+		if ($CheckDuplicates.count -gt 1)
+		{
+			$CheckArray = $Array | Where-Object { $_ -like "*$DeviceAlias*" }
+			if ([string]::IsNullOrEmpty($CheckArray) -eq $true)
+			{
+				$Array += $DeviceAlias
+			}
+		}
+		
+		Write-Progress -Activity "Search in Progress" -Status "$percent% Complete:" -PercentComplete $percent
+		$Start += 1
+	}
+	
+	
+	[int]$Count = ($Array).count
+	$Start = 0
+	<#
+	foreach ($Alias in $Array)
+	{
+		$CheckDuplicates = Get-TVDeviceIdFromAlias -alias $Alias
+		$LastSeenValue = $CheckDuplicates | Measure-Object -Maximum
+		$i = 0
+		$percent = [math]::Round((($Start / $Count) * 100))
+		foreach ($item in $CheckDuplicates)
+		{
+			if ($item -ne $LastSeenValue.Maximum)
+			{
+				$devicesID = $item
+				$Device = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$devicesID" -Method get -Headers $header -ContentType application/json -ErrorAction SilentlyContinue
+				if ($Device.devices.device_id)
+				{
+					$Device.devices
+					#Delete-TVDevice -DeviceID $devicesID
+				}
+				
+			}
+			Write-Progress -Activity "Delete Duplicates in Progress" -Status "Deleting: $item" -PercentComplete $percent
+			$Start += 1
+			$i++
+		}
+	}
+	#>
+}
 
-#Remove-TVUser -UserID ""
-get-tvgroups
+Remove-TVDuplicateDevices
