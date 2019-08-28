@@ -1,0 +1,11 @@
+﻿<Project>
+	<Version>2.0</Version>
+	<FileID>72191a4e-9324-47f8-a0d4-9603637225ed</FileID>
+	<ProjectType>1</ProjectType>
+	<Files>
+		<File Build="0">TeamViewerPSModules.psd1</File>
+		<File Build="0">TeamViewerPSModules.psm1</File>
+		<File Build="1">Test-Module.ps1</File>
+	</Files>
+	<StartupScript>Test-Module.ps1</StartupScript>
+</Project>
