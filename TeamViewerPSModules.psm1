@@ -613,6 +613,7 @@ function Add-TVGroupShare {
 
 	.DESCRIPTION
 		Unshares a group from certain users.
+		This function supports the -WhatIf parameter
 
 	.PARAMETER GroupID
 		Teamviewer Group ID
@@ -625,11 +626,10 @@ function Add-TVGroupShare {
 		Can use Set-TVToken Function will then not be nessessary to use this paramameter
 
 	.EXAMPLE
-		<<<<<<< HEAD
 		PS C:\> Unshare-TVGroup -GroupID $value1 -UserID $value2
-		=======
-		PS C:\> Unshare-TVGroup -GroupID $value1 -UserID $value2
-		>>>>>>> 9e26f2ce1c85f677a6d8e573a307433a62398f41
+
+	.EXAMPLE
+		PS C:\> Unshare-TVGroup -GroupID $value1 -UserID $value2 -WhatIf
 
 	.NOTES
 		For more Details see Teamviewer API token Documentation
@@ -665,7 +665,9 @@ function Remove-TVGroupShare {
 	$body = [ordered]@{
 		users = $UserIDs
 	} | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$groupID/unshare_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
+	if ($PSCmdlet.ShouldProcess("$groupID" , "Remove-TVGroupShare")) {
+		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$groupID/unshare_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
+	}
 }
 
 <#
