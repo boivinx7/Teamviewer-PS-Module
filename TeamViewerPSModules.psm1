@@ -18,12 +18,11 @@
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Set-TVToken
-{
+function Set-TVToken {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -34,13 +33,11 @@ function Set-TVToken
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $UserToken")
 	$TokenTest = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/ping" -Method GET -Headers $header -ContentType application/json
-	if ($TokenTest.token_valid -eq $true)
-	{
+	if ($TokenTest.token_valid -eq $true) {
 		Write-Output "Teamviewer Token Is Working and Set"
 		$global:TVToken = $UserToken
 	}
-	else
-	{
+	else {
 		Write-Output "Teamviewer Token not working"
 	}
 }
@@ -64,27 +61,23 @@ function Set-TVToken
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVAccountInformation
-{
+function Get-TVAccountInformation {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -116,12 +109,11 @@ function Get-TVAccountInformation
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVDeviceIdFromAlias
-{
+function Get-TVDeviceIdFromAlias {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -129,16 +121,13 @@ function Get-TVDeviceIdFromAlias
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -171,12 +160,11 @@ function Get-TVDeviceIdFromAlias
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVDeviceInfoFromAlias
-{
+function Get-TVDeviceInfoFromAlias {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -184,16 +172,13 @@ function Get-TVDeviceInfoFromAlias
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -223,27 +208,23 @@ function Get-TVDeviceInfoFromAlias
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVDevices
-{
+function Get-TVDevices {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -275,12 +256,11 @@ function Get-TVDevices
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVUserIDFromEmail
-{
+function Get-TVUserIDFromEmail {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -288,16 +268,13 @@ function Get-TVUserIDFromEmail
 		$Token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$Token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -330,12 +307,11 @@ function Get-TVUserIDFromEmail
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVUserInformation
-{
+function Get-TVUserInformation {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -343,16 +319,13 @@ function Get-TVUserInformation
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -383,27 +356,23 @@ function Get-TVUserInformation
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVUsers
-{
+function Get-TVUsers {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -435,12 +404,11 @@ function Get-TVUsers
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVGroupIDFromName
-{
+function Get-TVGroupIDFromName {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -448,16 +416,13 @@ function Get-TVGroupIDFromName
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -487,23 +452,20 @@ function Get-TVGroupIDFromName
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVGroups
-{
+function Get-TVGroups {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -535,12 +497,11 @@ function Get-TVGroups
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVGroupDetailFromGroupID
-{
+function Get-TVGroupDetailFromGroupID {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token,
@@ -548,25 +509,20 @@ function Get-TVGroupDetailFromGroupID
 		$GroupID
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -610,50 +566,46 @@ function Get-TVGroupDetailFromGroupID
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-	function Add-TVGroupShare
-	{
-		[CmdletBinding(ConfirmImpact = 'Medium',
-					   PositionalBinding = $false,
-					   SupportsPaging = $true,
-					   SupportsShouldProcess = $true)]
-		param
-		(
-			[Parameter(Mandatory = $true)]
-			[string]$GroupID,
-			[Parameter(Mandatory = $true)]
-			[ValidateSet('read', 'readwrite', 'full')]
-			[string]$GroupPermissions,
-			[Parameter(Mandatory = $true)]
-			[string]$UserID,
-			[string]$Token
-		)
+function Add-TVGroupShare {
+	[CmdletBinding(ConfirmImpact = 'Medium',
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
+	param
+	(
+		[Parameter(Mandatory = $true)]
+		[string]$GroupID,
+		[Parameter(Mandatory = $true)]
+		[ValidateSet('read', 'readwrite', 'full')]
+		[string]$GroupPermissions,
+		[Parameter(Mandatory = $true)]
+		[string]$UserID,
+		[string]$Token
+	)
 
-		if ($global:TVToken)
-		{
-			$token = $global:TVToken
-		}
-		elseif ($token)
-		{
-			$token = $token
-		}
-		else
-		{
-			Write-Output "You need to Set the Token"
-			break
-		}
-		$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-		$header.Add("authorization", "Bearer  $token")
-		$body = @{
-			Users = @(
-				@{
-					userid = "$UserId"
-					permissions = "$GroupPermissions"
-				}
-			)
-		} | ConvertTo-Json
-		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$GroupID/share_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
-
+	if ($global:TVToken) {
+		$token = $global:TVToken
 	}
+	elseif ($token) {
+		$token = $token
+	}
+	else {
+		Write-Output "You need to Set the Token"
+		break
+	}
+	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+	$header.Add("authorization", "Bearer  $token")
+	$body = @{
+		Users = @(
+			@{
+				userid      = "$UserId"
+				permissions = "$GroupPermissions"
+			}
+		)
+	} | ConvertTo-Json
+	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$GroupID/share_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
+
+}
 
 <#
 	.SYNOPSIS
@@ -684,12 +636,11 @@ function Get-TVGroupDetailFromGroupID
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Remove-TVGroupShare
-{
+function Remove-TVGroupShare {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -699,16 +650,13 @@ function Remove-TVGroupShare
 		$Token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -753,12 +701,11 @@ function Remove-TVGroupShare
 	.NOTES
 		Additional information about the function.
 #>
-function Add-TVUser
-{
+function Add-TVUser {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -776,62 +723,50 @@ function Add-TVUser
 		$token
 	)
 
-	if ($defaultUserPermissions -eq "ManageAdmins")
-	{
+	if ($defaultUserPermissions -eq "ManageAdmins") {
 		$defaultUserPermissions = @("ManageAdmins", "ManageUsers", "ShareOwnGroups", "EditFullProfile", "ViewAllConnections", "ViewOwnConnections", "EditConnections", "DeleteConnections", "ManagePolicies", "AssignPolicies", "AcknowledgeAllAlerts", "AcknowledgeOwnAlerts", "ViewAllAssets", "ViewOwnAssets", "EditAllCustomModuleConfigs", "EditOwnCustomModuleConfigs")
 	}
-	elseif ($defaultUserPermissions -eq "ManageUsers")
-	{
+	elseif ($defaultUserPermissions -eq "ManageUsers") {
 		$defaultUserPermissions = @("ManageUsers", "ShareOwnGroups", "EditFullProfile", "ViewAllConnections", "ViewOwnConnections", "EditConnections", "DeleteConnections", "ManagePolicies", "AssignPolicies", "AcknowledgeAllAlerts", "AcknowledgeOwnAlerts", "ViewAllAssets", "ViewOwnAssets", "EditAllCustomModuleConfigs", "EditOwnCustomModuleConfigs")
 	}
-	elseif ($defaultUserPermissions -eq "ViewAllConnections")
-	{
+	elseif ($defaultUserPermissions -eq "ViewAllConnections") {
 		$defaultUserPermissions = @("ViewAllConnections", "ViewOwnConnections")
 	}
-	elseif ($defaultUserPermissions -eq "ManagePolicies")
-	{
+	elseif ($defaultUserPermissions -eq "ManagePolicies") {
 		$defaultUserPermissions = @("ManagePolicies", "AssignPolicies", "AcknowledgeAllAlerts", "AcknowledgeOwnAlerts")
 	}
-	elseif ($defaultUserPermissions -eq "AssignPolicies")
-	{
+	elseif ($defaultUserPermissions -eq "AssignPolicies") {
 		$defaultUserPermissions = @("AssignPolicies", "AcknowledgeAllAlerts", "AcknowledgeOwnAlerts")
 	}
-	elseif ($defaultUserPermissions -eq "AcknowledgeAllAlerts")
-	{
+	elseif ($defaultUserPermissions -eq "AcknowledgeAllAlerts") {
 		$defaultUserPermissions = @("AcknowledgeAllAlerts", "AcknowledgeOwnAlerts")
 	}
-	elseif ($defaultUserPermissions -eq "ViewOwnAssets")
-	{
+	elseif ($defaultUserPermissions -eq "ViewOwnAssets") {
 		$defaultUserPermissions = @("ViewAllAssets", "ViewOwnAssets")
 	}
-	elseif ($defaultUserPermissions -eq "EditAllCustomModuleConfigs")
-	{
+	elseif ($defaultUserPermissions -eq "EditAllCustomModuleConfigs") {
 		$defaultUserPermissions = @("EditAllCustomModuleConfigs", "EditOwnCustomModuleConfigs")
 	}
-	elseif ($defaultUserPermissions -eq "Default")
-	{
+	elseif ($defaultUserPermissions -eq "Default") {
 		$defaultUserPermissions = @("ShareOwnGroups", "ViewOwnConnections", "EditConnections", "EditFullProfile")
 	}
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $token")
 	$body = (@{
-			email	   = $UserEmail
+			email      = $UserEmail
 			password   = $defaultUserPassword
-			name	   = $UserFullName
+			name       = $UserFullName
 			language   = $defaultUserLanguage
 			permission = $defaultUserPermissions
 		}) | ConvertTo-Json
@@ -846,6 +781,7 @@ function Add-TVUser
 		Deletes a device from the computers & contacts list. An error is returned if either
 		• a device with the given dID does not exist in the current user's computers & contact list.
 		• the user does not have sufficient rights to remove the specified contact from a shared group.
+		This function supports the -WhatIf parameter
 
 	.PARAMETER DeviceID
 		Teamviewer Device or Contact ID
@@ -855,23 +791,22 @@ function Add-TVUser
 		Can use Set-TVToken Function will then not be nessessary to use this paramameter
 
 	.EXAMPLE
-<<<<<<< HEAD
 		PS C:\> Delete-TVDevice -DeviceID $value1
-=======
-				PS C:\> Delete-TVDevice -DeviceID $value1
->>>>>>> 9e26f2ce1c85f677a6d8e573a307433a62398f41
+
+	.EXAMPLE
+		PS C:\> Delete-TVDevice -DeviceID $value2 -WhatIf
+
 
 	.NOTES
 		For more Details see Teamviewer API token Documentation
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Remove-TVDevice
-{
+function Remove-TVDevice {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -879,22 +814,21 @@ function Remove-TVDevice
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $token")
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$deviceID" -Method Delete -Headers $header -ContentType application/json
+	if ($PSCmdlet.ShouldProcess("$DeviceID" , "Remove-TVDevice")) {
+		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$deviceID" -Method Delete -Headers $header -ContentType application/json
+	}
 }
 
 <#
@@ -929,12 +863,11 @@ function Remove-TVDevice
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Set-TVPolicyAssignement
-{
+function Set-TVPolicyAssignement {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -945,16 +878,13 @@ function Set-TVPolicyAssignement
 		$Password
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -992,12 +922,11 @@ function Set-TVPolicyAssignement
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Set-TVGroupAssignement
-{
+function Set-TVGroupAssignement {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -1007,16 +936,13 @@ function Set-TVGroupAssignement
 		$Token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1050,27 +976,23 @@ function Set-TVGroupAssignement
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVPolicyIdFromName
-{
+function Get-TVPolicyIdFromName {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$policyname,
 		$token
 	)
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1101,26 +1023,22 @@ function Get-TVPolicyIdFromName
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Get-TVPolicies
-{
+function Get-TVPolicies {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$token
 	)
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1159,12 +1077,11 @@ function Get-TVPolicies
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Remove-TVOldDevices
-{
+function Remove-TVOldDevices {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -1172,16 +1089,13 @@ function Remove-TVOldDevices
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1190,10 +1104,8 @@ function Remove-TVOldDevices
 	$LastSeen = ($LastSeen).ToString("yyyy-MM-dd")
 	$Device = Get-TVDevices -token $token
 	$DeviceInformation = $Device.devices | Where-Object { $_.online_state -eq "offline" -and $_.last_seen -lt "$LastSeen*" }
-	foreach ($item in $DeviceInformation)
-	{
-		if ($item.last_seen)
-		{
+	foreach ($item in $DeviceInformation) {
+		if ($item.last_seen) {
 			Remove-TVDevice -deviceID $item.device_id -token $token
 		}
 
@@ -1229,12 +1141,11 @@ function Remove-TVOldDevices
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Switch-TVDevicesGroups
-{
+function Switch-TVDevicesGroups {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		$Token,
@@ -1245,16 +1156,13 @@ function Switch-TVDevicesGroups
 		[bool]$DeleteOldGroup
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1267,16 +1175,14 @@ function Switch-TVDevicesGroups
 	$Devices = $Devices.device_id
 	[int]$Count = ($Devices).count
 	$Start = 0
-	foreach ($DID in $Devices)
-	{
+	foreach ($DID in $Devices) {
 		$percent = [math]::Round((($Start / $Count) * 100))
 		Set-TVGroupAssignement -devicesID $DID -groupID $NewTvgroupID -token $token
 		Write-Progress -Activity "Moving in Progress" -Status "Moving: $DID" -PercentComplete $percent
 		$Start += 1
 	}
 
-	if ($DeleteOldGroup -eq $true)
-	{
+	if ($DeleteOldGroup -eq $true) {
 		$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 		$header.Add("authorization", "Bearer  $token")
 		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$OldTvgroupID" -Method Delete -Headers $header -ContentType application/json
@@ -1310,12 +1216,11 @@ function Switch-TVDevicesGroups
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf.
 #>
-function Set-TVPolicyToAllDevicesInGroup
-{
+function Set-TVPolicyToAllDevicesInGroup {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -1325,16 +1230,13 @@ function Set-TVPolicyToAllDevicesInGroup
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1344,8 +1246,7 @@ function Set-TVPolicyToAllDevicesInGroup
 	$Devices = $Devices.device_id
 	[int]$Count = ($Devices).count
 	$Start = 0
-	foreach ($DID in $Devices)
-	{
+	foreach ($DID in $Devices) {
 
 		$percent = [math]::Round((($Start / $Count) * 100))
 		Set-TVPolicyAssignement -DeviceID $DID -PolicyID $Tvpolicy
@@ -1452,12 +1353,11 @@ function Remove-TVDuplicateDevices
 }
 #>
 
-function Add-TVDevice
-{
+function Add-TVDevice {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -1470,16 +1370,13 @@ function Add-TVDevice
 		[string]$password
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
@@ -1489,10 +1386,10 @@ function Add-TVDevice
 		Users = @(
 			@{
 				remotecontrol_id = "$RemotecontrolID"
-				groupid		     = "$GroupID"
-				description		 = "$Description"
-				alias		     = "$alias"
-				password		 = "$password"
+				groupid          = "$GroupID"
+				description      = "$Description"
+				alias            = "$alias"
+				password         = "$password"
 			}
 		)
 	} | ConvertTo-Json
@@ -1518,12 +1415,11 @@ function Add-TVDevice
 		https://www.teamviewer.com/en/for-developers/teamviewer-api/
 		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
 #>
-function Remove-TVGroup
-{
+function Remove-TVGroup {
 	[CmdletBinding(ConfirmImpact = 'Medium',
-				   PositionalBinding = $false,
-				   SupportsPaging = $true,
-				   SupportsShouldProcess = $true)]
+		PositionalBinding = $false,
+		SupportsPaging = $true,
+		SupportsShouldProcess = $true)]
 	param
 	(
 		[Parameter(Mandatory = $true)]
@@ -1531,16 +1427,13 @@ function Remove-TVGroup
 		$token
 	)
 
-	if ($global:TVToken)
-	{
+	if ($global:TVToken) {
 		$token = $global:TVToken
 	}
-	elseif ($token)
-	{
+	elseif ($token) {
 		$token = $token
 	}
-	else
-	{
+	else {
 		Write-Output "You need to Set the Token"
 		break
 	}
