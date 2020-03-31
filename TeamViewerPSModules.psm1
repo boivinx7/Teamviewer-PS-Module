@@ -538,11 +538,7 @@ function Get-TVGroupDetailFromGroupID {
 
 	.DESCRIPTION
 		Shares a group with the given users. Will not change the share state with other users, but it is possible to
-<<<<<<< HEAD
 		overwrite the permissions for existing shares.
-=======
-		overwrite the permissions for existing shares.
->>>>>>> 9e26f2ce1c85f677a6d8e573a307433a62398f41
 
 	.PARAMETER GroupID
 		Teamviewer Group ID
@@ -838,11 +834,7 @@ function Remove-TVDevice {
 		3
 
 	.DESCRIPTION
-		<<<<<<< HEAD
 		A detailed description of the Set-TVPolicyAssignement function.
-		=======
-		A detailed description of the Assign-TVPolicy function.
-		>>>>>>> 9e26f2ce1c85f677a6d8e573a307433a62398f41
 
 	.PARAMETER DeviceID
 		ID of Teamviewer Device to assign policy to
