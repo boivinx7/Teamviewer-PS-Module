@@ -1399,6 +1399,7 @@ function Add-TVDevice {
 <#
 	.SYNOPSIS
 		Deletes a Teamviewer group
+		This function supports the -WhatIf parameter
 
 	.PARAMETER GroupID
 		Teamviewer Group ID
@@ -1408,7 +1409,10 @@ function Add-TVDevice {
 		Can use Set-TVToken Function will then not be nessessary to use this paramameter
 
 	.EXAMPLE
-		PS C:\> Remove-TVGroup -GroupID g41409197
+		PS C:\> Remove-TVGroup -GroupID g41804127
+
+	.EXAMPLE
+		PS C:\> Remove-TVGroup -GroupID g41804127 -WhatIf
 
 	.NOTES
 		For more Details see Teamviewer API token Documentation
@@ -1439,5 +1443,7 @@ function Remove-TVGroup {
 	}
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $token")
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$groupID" -Method Delete -Headers $header -ContentType application/json
+	if ($PSCmdlet.ShouldProcess("$groupID" , "Remove-TVGroup")) {
+		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$groupID" -Method Delete -Headers $header -ContentType application/json
+	}
 }
