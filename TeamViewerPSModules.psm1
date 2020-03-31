@@ -1498,3 +1498,34 @@ function Add-TVDevice
 	} | ConvertTo-Json
 	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices" -Method Post -Headers $header -ContentType application/json -Body "$body"
 }
+
+function Remove-TVGroup
+{
+	[CmdletBinding(ConfirmImpact = 'Medium',
+				   PositionalBinding = $false,
+				   SupportsPaging = $true,
+				   SupportsShouldProcess = $true)]
+	param
+	(
+		[Parameter(Mandatory = $true)]
+		$GroupID,
+		$token
+	)
+	
+	if ($global:TVToken)
+	{
+		$token = $global:TVToken
+	}
+	elseif ($token)
+	{
+		$token = $token
+	}
+	else
+	{
+		Write-Output "You need to Set the Token"
+		break
+	}
+	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+	$header.Add("authorization", "Bearer  $token")
+	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$groupID" -Method Delete -Headers $header -ContentType application/json
+}
