@@ -540,7 +540,6 @@ function Get-TVGroupDetailFromGroupID {
 		Shares a group with the given users. Will not change the share state with other users, but it is possible to
 		overwrite the permissions for existing shares.
 
-
 	.PARAMETER GroupID
 		Teamviewer Group ID
 
