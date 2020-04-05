@@ -34,8 +34,11 @@ function Set-TVToken {
 	$header.Add("authorization", "Bearer  $UserToken")
 	$TokenTest = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/ping" -Method GET -Headers $header -ContentType application/json
 	if ($TokenTest.token_valid -eq $true) {
-		Write-Output "Teamviewer Token Is Working and Set"
-		$global:TVToken = $UserToken
+		$header.Add("authorization", "Bearer  $token")
+		if ($PSCmdlet.ShouldProcess("$UserToken" , "Set-TVToken")) {
+			Write-Output "Teamviewer Token Is Working and Set"
+			$global:TVToken = $UserToken
+		}
 	}
 	else {
 		Write-Output "Teamviewer Token not working"
@@ -83,8 +86,10 @@ function Get-TVAccountInformation {
 	}
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $token")
-	$Account = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/account" -Method GET -Headers $header -ContentType application/json
-	$Account
+	if ($PSCmdlet.ShouldProcess("$token" , "Get-TVAccountInformation")) {
+		$Account = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/account" -Method GET -Headers $header -ContentType application/json
+		$Account
+	}
 }
 
 <#
@@ -133,9 +138,11 @@ function Get-TVDeviceIdFromAlias {
 	}
 	$header = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 	$header.Add("authorization", "Bearer  $token")
-	$Device = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices?full_list=true" -Method GET -Headers $header -ContentType application/json
-	$DeviceInformation = $Device.devices | Where-Object { $_.alias -like "*$alias*" }
-	$DeviceInformation.device_id
+	if ($PSCmdlet.ShouldProcess("$alias" , "Get-TVDeviceIdFromAlias")) {
+		$Device = Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices?full_list=true" -Method GET -Headers $header -ContentType application/json
+		$DeviceInformation = $Device.devices | Where-Object { $_.alias -like "*$alias*" }
+		$DeviceInformation.device_id
+	}
 }
 
 <#
@@ -599,8 +606,9 @@ function Add-TVGroupShare {
 			}
 		)
 	} | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$GroupID/share_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
-
+	if ($PSCmdlet.ShouldProcess("$GroupID" , "Add-TVGroupShare")) {
+		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/groups/$GroupID/share_group" -Method Post -Headers $header -ContentType application/json -Body "$body"
+	}
 }
 
 <#
@@ -768,7 +776,9 @@ function Add-TVUser {
 			language   = $defaultUserLanguage
 			permission = $defaultUserPermissions
 		}) | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/users" -Method Post -Headers $header -ContentType application/json -Body $body
+		if ($PSCmdlet.ShouldProcess("$body" , "Add-TVUser")) {
+			Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/users" -Method Post -Headers $header -ContentType application/json -Body $body
+		}
 }
 
 <#
@@ -888,17 +898,19 @@ function Set-TVPolicyAssignement {
 			policy_id = $PolicyID
 			password  = $password
 		}) | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$DeviceID" -Method PUT -Headers $header -ContentType application/json -Body $body
+		if ($PSCmdlet.ShouldProcess("$DeviceID" , "Set-TVPolicyAssignement")) {
+			Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$DeviceID" -Method PUT -Headers $header -ContentType application/json -Body $body
+		}
 }
 
 <#
 	.SYNOPSIS
-		Use to Assigne Group to Devices
+		Use to Assign Group to Devices
 
 	.DESCRIPTION
 		Use to Change Device from Group
 
-	.PARAMETER devicesID
+	.PARAMETER deviceID
 		ID of Teamviewer Device to move to Group
 
 	.PARAMETER groupID
@@ -909,7 +921,7 @@ function Set-TVPolicyAssignement {
 		Can use Set-TVToken Function will then not be nessessary to use this paramameter
 
 	.EXAMPLE
-		PS C:\> Assign-TVGroup -DevicesID $Value1 -GroupID $Value2
+		PS C:\> Assign-TVGroup -DeviceID $Value1 -GroupID $Value2
 
 	.NOTES
 		For more Details see Teamviewer API token Documentation
@@ -924,7 +936,7 @@ function Set-TVGroupAssignement {
 	param
 	(
 		[Parameter(Mandatory = $true)]
-		$DevicesID,
+		$DeviceID,
 		[Parameter(Mandatory = $true)]
 		$GroupID,
 		$Token
@@ -945,7 +957,9 @@ function Set-TVGroupAssignement {
 	$body = (@{
 			groupid = $groupID
 		}) | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$devicesID" -Method PUT -Headers $header -ContentType application/json -Body $body
+		if ($PSCmdlet.ShouldProcess("$deviceID" , "Set-TVGroupAssignement")) {
+			Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices/$deviceID" -Method PUT -Headers $header -ContentType application/json -Body $body
+		}
 }
 
 <#
@@ -1347,6 +1361,42 @@ function Remove-TVDuplicateDevices
 }
 #>
 
+<#
+	.SYNOPSIS
+		Adds a Teamviewer Device
+		This function supports the -WhatIf parameter
+
+	.PARAMETER GroupID
+		Teamviewer Group ID
+		This is mandatory and must be passed
+
+	.PARAMETER RemotecontrolID
+		Teamviewer Device Remote Control ID
+
+	.PARAMETER token
+		Is the User Level Token that you can create from the Teamviewer Management Console
+		Can use Set-TVToken Function will then not be nessessary to use this paramameter
+
+	.PARAMETER Description
+		Description of the device being added
+
+	.PARAMETER Alias
+		Alias of the device being added
+
+	.PARAMETER Password
+		Teamviweer Password of the device being added
+
+	.EXAMPLE
+		PS C:\> Add-TVDevice -GroupID g41804127 -RemotecontrolID 1478523699 -Description "My Office Computer" -Alias "MY-OFF-001" -Password "Kl779d4"
+
+	.EXAMPLE
+		PS C:\> PS C:\> Add-TVDevice -GroupID g41804127 -RemotecontrolID 1478523699 -Description "My Office Computer" -Alias "MY-OFF-001" -Password "Kl779d4 -WhatIf
+
+	.NOTES
+		For more Details see Teamviewer API token Documentation
+		https://www.teamviewer.com/en/for-developers/teamviewer-api/
+		https://dl.tvcdn.de/integrate/TeamViewer_API_Documentation.pdf
+#>
 function Add-TVDevice {
 	[CmdletBinding(ConfirmImpact = 'Medium',
 		PositionalBinding = $false,
@@ -1387,7 +1437,9 @@ function Add-TVDevice {
 			}
 		)
 	} | ConvertTo-Json
-	Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices" -Method Post -Headers $header -ContentType application/json -Body "$body"
+	if ($PSCmdlet.ShouldProcess("$RemotecontrolID" , "Add-TVDevice")) {
+		Invoke-RestMethod -Uri "https://webapi.teamviewer.com/api/v1/devices" -Method Post -Headers $header -ContentType application/json -Body "$body"
+	}
 }
 
 <#
